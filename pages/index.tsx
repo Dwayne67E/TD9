@@ -2,12 +2,18 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
+import { useState } from 'react';
 
 const Home: NextPage = () => {
-  // Fonction pour effectuer le swap (à implémenter)
+  const [token1Value, setToken1Value] = useState("ETH");
+  const [token2Value, setToken2Value] = useState("USDC");
+
+  // Fonction pour effectuer le swap
   function performSwap() {
-    // Code pour effectuer le swap ici
-    alert('Swap performed successfully!');
+    // Échanger les valeurs des champs d'entrée
+    const temp = token1Value;
+    setToken1Value(token2Value);
+    setToken2Value(temp);
   }
 
   return (
@@ -21,34 +27,48 @@ const Home: NextPage = () => {
         <link href="/favicon.ico" rel="icon" />
       </Head>
 
+      <header className={styles.header}>
+        <div className={styles.logo}>
+          <img src="/mon_logo.png" alt="Swapkirk" />
+        </div>
+        <nav className={styles.nav}>
+          <ul>
+            <li><a href="#">Swap</a></li>
+            <li><a href="#">Pool</a></li>
+            <li><a href="#">About</a></li>
+          </ul>
+        </nav>
+      </header>
+
       <main className={styles.main}>
         <ConnectButton />
 
         <h1 className={styles.title}>
-          Voulez-vous échanger vos cryptos ?
+          Échangez vos cryptos
         </h1>
-
-        {/* Section de swap */}
-        <div className="swap-section">
-          <div className="input-group">
-            <label htmlFor="token1">Select Token 1:</label>
-            <input type="text" id="token1" placeholder="Token 1" />
-          </div>
-          <div className="input-group">
-            <label htmlFor="token2">Select Token 2:</label>
-            <input type="text" id="token2" placeholder="Token 2" />
-          </div>
-          <button className="swap-button" onClick={performSwap}>
-            Swap Tokens
+        <div className={styles.inputGroup}>
+          <label htmlFor="token1">Select Token 1: </label>
+          <input type="text" id="token1" placeholder="Insérez une valeur" />
+          <select value={token1Value} onChange={(e) => setToken1Value(e.target.value)}>
+            <option value="ETH">ETH</option>
+            <option value="USDC">USDC</option>
+            <option value="SOL">SOL</option>
+          </select>
+          <label htmlFor="token2">Select Token 2: </label>
+          <input type="text" id="token2" placeholder="Insérez une valeur" />
+          <select value={token2Value} onChange={(e) => setToken2Value(e.target.value)}>
+            <option value="ETH">ETH</option>
+            <option value="USDC">USDC</option>
+            <option value="SOL">SOL</option>
+          </select>
+          <button className={styles.swapButton} onClick={performSwap}>
+            Swap
+          </button>
+          <button className={styles.approveButton}>
+            Approve
           </button>
         </div>
       </main>
-
-      <footer className={styles.footer}>
-        <a href="https://rainbow.me" rel="noopener noreferrer" target="_blank">
-          Made with ❤️ by Elias
-        </a>
-      </footer>
     </div>
   );
 };
