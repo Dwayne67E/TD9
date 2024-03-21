@@ -4,17 +4,31 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import { useState } from 'react';
 
-
 const Home: NextPage = () => {
   const [token1Value, setToken1Value] = useState("ETH");
   const [token2Value, setToken2Value] = useState("USDC");
+  const [nbr_token1, set_nbr_token1] = useState("");
+  const [nbr_token2, set_nbr_token2] = useState("");
 
   // Fonction pour effectuer le swap
   function performSwap() {
-    // Échanger les valeurs des champs d'entrée
     const temp = token1Value;
     setToken1Value(token2Value);
     setToken2Value(temp);
+  }
+
+  // Mettre à jour la valeur du deuxième champ d'entrée avec celle du premier
+  function updateSecondInputValue(event: React.ChangeEvent<HTMLInputElement>) {
+    const newValue = event.target.value;
+    set_nbr_token2(newValue);
+    set_nbr_token1(newValue); // Mettre à jour aussi le premier champ
+  }
+
+  // Mettre à jour la valeur du premier champ d'entrée avec celle du deuxième
+  function updateFirstInputValue(event: React.ChangeEvent<HTMLInputElement>) {
+    const newValue = event.target.value;
+    set_nbr_token1(newValue);
+    set_nbr_token2(newValue); // Mettre à jour aussi le deuxième champ
   }
 
   return (
@@ -49,14 +63,14 @@ const Home: NextPage = () => {
         </h1>
         <div className={styles.inputGroup}>
           <label htmlFor="token1">Select Token 1: </label>
-          <input type="text" id="token1" placeholder="Insérez une valeur" />
+          <input type="number" id="token1" placeholder={"Insérez ici une valeur"} value={nbr_token1} onChange={updateFirstInputValue} />
           <select value={token1Value} onChange={(e) => setToken1Value(e.target.value)}>
             <option value="ETH">ETH</option>
             <option value="USDC">USDC</option>
             <option value="SOL">SOL</option>
           </select>
           <label htmlFor="token2">Select Token 2: </label>
-          <input type="text" id="token2" placeholder="Insérez une valeur" />
+          <input type="number" id="token2" placeholder={"Insérez ici une valeur"} value={nbr_token2} onChange={updateSecondInputValue} />
           <select value={token2Value} onChange={(e) => setToken2Value(e.target.value)}>
             <option value="ETH">ETH</option>
             <option value="USDC">USDC</option>
