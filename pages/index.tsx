@@ -44,7 +44,7 @@ const Home: NextPage = () => {
 
       <header className={styles.header}>
         <div className={styles.logo}>
-          <img src="/mon_logo.png" alt="Swapkirk" />
+          <img src="./mon_logo.png" alt="Swapkirk" />
         </div>
         <nav className={styles.nav}>
           <ul>
